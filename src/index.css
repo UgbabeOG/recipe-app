@@ -16,8 +16,8 @@
       ),
       radial-gradient(
         farthest-side,
-        #0000 calc(100% - 18px),
-        #000 calc(100% - 16px)
+        #0000 calc(100% - 10px),
+        #000 calc(100% - 10px)
       );
     -webkit-mask-composite: destination-in;
     mask-composite: intersect;

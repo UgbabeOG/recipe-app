@@ -9,8 +9,12 @@ const SearchBar = () => {
     <>
       <div>
         <form
-          onSubmit={getQuery}
-          className="p-5 flex justify-center gap-4 min-h-[10vh]"
+          onSubmit={(e) =>
+            search.length > 0
+              ? getQuery(e)
+              :  alert("enter search term in search bar") && e.preventDefault()
+          }
+          className="p-5 flex justify-center gap-4 min-h-[10vh] w-full"
           action=""
         >
           <input
@@ -19,8 +23,8 @@ const SearchBar = () => {
             type="text"
             value={search}
             onChange={updateSearch}
-          />{" "}
-          <button>
+          />
+          <button type="submit">
             <FaSearch className="my-2 text-3xl text-sky-600" />
           </button>
         </form>
