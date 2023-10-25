@@ -21,7 +21,7 @@ const RecipeCard = () => {
       const data = await res.json();
       setRecipes(data.hits);
     } catch (error) {
-      setError(true)
+      setError(true);
       console.error(`error finding recipe : ${error.message}`);
     } finally {
       setLoading(false);
@@ -54,7 +54,6 @@ const RecipeCard = () => {
                   key={recipe.recipe.label}
                   className="shadow-lg rounded-md p-2  "
                 >
-                  {" "}
                   <div className="container p-3 m-2 relative flex gap-4 overflow-clip">
                     <img
                       className="rounded-md  object-contain "
@@ -65,14 +64,12 @@ const RecipeCard = () => {
                       {recipe.recipe.label}
                     </h3>{" "}
                     <div className="flex flex-col">
-                      {" "}
                       <p className="">
-                        {recipe.recipe.dietLabels} 
+                        {recipe.recipe.dietLabels}
                         {recipe.recipe.cuisineType} cuisine
                       </p>
-                        {" "}
-                        {" "}
-                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p> <p>{recipe.recipe.healthLabels}</p>
+                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p>{" "}
+                      <p>{recipe.recipe.healthLabels}</p>
                     </div>
                   </div>
                   <div className="box">
