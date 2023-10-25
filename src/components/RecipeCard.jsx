@@ -19,10 +19,9 @@ const RecipeCard = () => {
         throw new Error(`Failed to fetch data: HTTP status ${res.status}`);
       }
       const data = await res.json();
-      console.log(data.hits);
       setRecipes(data.hits);
     } catch (error) {
-      setError(true);
+      setError(true)
       console.error(`error finding recipe : ${error.message}`);
     } finally {
       setLoading(false);
@@ -68,11 +67,12 @@ const RecipeCard = () => {
                     <div className="flex flex-col">
                       {" "}
                       <p className="">
-                        {recipe.recipe.dietLabels}
+                        {recipe.recipe.dietLabels} 
                         {recipe.recipe.cuisineType} cuisine
                       </p>
-                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p>
-                      <p>{recipe.recipe.healthLabels}</p>
+                        {" "}
+                        {" "}
+                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p> <p>{recipe.recipe.healthLabels}</p>
                     </div>
                   </div>
                   <div className="box">
