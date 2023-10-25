@@ -33,7 +33,6 @@ const RecipeCard = () => {
     fetchRecipe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
-
   return (
     <>
       {loading ? (
@@ -54,19 +53,32 @@ const RecipeCard = () => {
               {recipes.map((recipe) => (
                 <div
                   key={recipe.recipe.label}
-                  className="shadow-lg rounded-md p-2"
+                  className="shadow-lg rounded-md p-2  "
                 >
-                  <img
-                    className="rounded-md p-2 object-cover relative"
-                    src={recipe.recipe.image}
-                    alt={recipe.recipe.label}
-                  />
-                  <h3 className="font-bold absolute">{recipe.recipe.label}</h3>{" "}
-                  <div className="">
-                    <p>Calories: {Math.floor(recipe.recipe.calories)}</p>{" "}
-                    <ol>
+                  {" "}
+                  <div className="container p-3 m-2 relative flex gap-4 overflow-clip">
+                    <img
+                      className="rounded-md  object-contain "
+                      src={recipe.recipe.image}
+                      alt={recipe.recipe.label}
+                    />
+                    <h3 className="font-bold absolute bottom-3 left-3 p-2 ">
+                      {recipe.recipe.label}
+                    </h3>{" "}
+                    <div className="flex flex-col">
                       {" "}
-                      <p>ingredients below</p>
+                      <p className="">
+                        {recipe.recipe.dietLabels} 
+                        {recipe.recipe.cuisineType} cuisine
+                      </p>
+                        {" "}
+                        {" "}
+                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p> <p>{recipe.recipe.healthLabels}</p>
+                    </div>
+                  </div>
+                  <div className="box">
+                    <ol>
+                      <p className="font-bold">Ingredients below</p>
                       {recipe.recipe.ingredients.map((ingredient, i) => (
                         <li key={i}>{ingredient.text}</li>
                       ))}
