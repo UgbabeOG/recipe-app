@@ -68,11 +68,11 @@ const RecipeCard = () => {
                     <div className="flex flex-col">
                       {" "}
                       <p className="">
-                        {recipe.recipe.dietLabels} 
+                        {recipe.recipe.dietLabels}
                         {recipe.recipe.cuisineType} cuisine
                       </p>
-                        
-                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p> <p>{recipe.recipe.healthLabels}</p>
+                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p>
+                      <p>{recipe.recipe.healthLabels}</p>
                     </div>
                   </div>
                   <div className="box">
