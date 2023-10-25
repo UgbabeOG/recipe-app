@@ -71,8 +71,7 @@ const RecipeCard = () => {
                         {recipe.recipe.dietLabels} 
                         {recipe.recipe.cuisineType} cuisine
                       </p>
-                        {" "}
-                        {" "}
+                        
                       <p>Calories: {Math.floor(recipe.recipe.calories)}</p> <p>{recipe.recipe.healthLabels}</p>
                     </div>
                   </div>
