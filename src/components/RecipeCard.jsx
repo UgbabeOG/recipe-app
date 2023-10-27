@@ -1,69 +1,46 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, {  useContext } from "react";
 import { SearchContext } from "../context/SearchContext";
 
 const RecipeCard = () => {
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const { query } = useContext(SearchContext);
-  const fetchRecipe = async () => {
-    const apiEndpoint = process.env.REACT_APP_API_ENDPOINT,
-      apiId = process.env.REACT_APP_API_ID,
-      apiKey = process.env.REACT_APP_API_KEY;
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `${apiEndpoint}?q=${query}&app_id=${apiId}&app_key=${apiKey}`
-      );
-      if (!res.ok) {
-        throw new Error(`Failed to fetch data: HTTP status ${res.status}`);
-      }
-      const data = await res.json();
-      setRecipes(data.hits);
-    } catch (error) {
-      setError(true);
-      console.error(`error finding recipe : ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { recipes, error, loading   } =
+    useContext(SearchContext);
 
-  useEffect(() => {
-    fetchRecipe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+  // useEffect(() => {
+  //   fetchRecipe();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [query]);
   return (
     <>
       {loading ? (
-        <div className="flex flex-col justify-center items-center">
-          <div className="custom-loader block"></div>
+        <div className="flex flex-col items-center justify-center">
+          <div className="block custom-loader"></div>
           <p className="p-5 text-3xl">searching for recipe please wait...</p>
         </div>
       ) : error ? (
         <p>Network error, please try again</p>
       ) : recipes && recipes.length === 0 ? (
-        <p className="p-5 text-3xl text-center">
-          Enter food name in search bar to find your ingredients.
+        <p className="w-[50%] m-auto p-5 text-sm text-center text-slate-500">
+          Enter what you have eaten, like "coffee and croissant" or "chicken
+          enchilada" to see how it works. We have accurate data tens of
+          thousands of foods, including international dishes.
         </p>
       ) : (
         recipes && (
-          <div className="container mx-auto py-20 max-w-[960px] px-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-4 p-4 bg-slate-200">
+          <div className="container max-w-full px-5 py-10 mx-auto bg-slate-200">
+            <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 place-items-center bg-slate-300">
               {recipes.map((recipe) => (
                 <div
                   key={recipe.recipe.label}
-                  className="shadow-lg rounded-md p-2  "
+                  className="max-w-lg rounded-md shadow-xl min-w-fit "
                 >
-                  <div className="container p-3 m-2 relative flex gap-4 overflow-clip">
+                  <div className="flex gap-8 p-3 m-2 ">
                     <img
-                      className="rounded-md  object-contain "
+                      className="object-contain w-40 rounded-md "
                       src={recipe.recipe.image}
                       alt={recipe.recipe.label}
-                    />
-                    <h3 className="font-bold absolute bottom-3 left-3 p-2 ">
-                      {recipe.recipe.label}
-                    </h3>{" "}
+                    />{" "}
                     <div className="flex flex-col">
+                      <h3 className="p-2 font-bold ">{recipe.recipe.label}</h3>
                       <p className="">
                         {recipe.recipe.dietLabels}
                         {recipe.recipe.cuisineType} cuisine
@@ -72,9 +49,9 @@ const RecipeCard = () => {
                       <p>{recipe.recipe.healthLabels}</p>
                     </div>
                   </div>
-                  <div className="box">
+                  <div className="p-4 bg-slate-400">
                     <ol>
-                      <p className="font-bold">Ingredients below</p>
+                      <p className="font-medium">Ingredients </p>
                       {recipe.recipe.ingredients.map((ingredient, i) => (
                         <li key={i}>{ingredient.text}</li>
                       ))}

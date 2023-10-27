@@ -12,13 +12,13 @@ const SearchBar = () => {
           onSubmit={(e) =>
             search.length > 0
               ? getQuery(e)
-              :  alert("enter search term in search bar") && e.preventDefault()
+              : alert("enter search term in search bar") && e.preventDefault()
           }
           className="p-5 flex justify-center gap-4 min-h-[10vh] w-full"
           action=""
         >
           <input
-            className="placeholder:italic placeholder:text-slate-150 w-2/5  bg-slate-300 rounded px-3 py-1"
+            className="w-2/5 px-3 py-1 rounded placeholder:italic placeholder:text-slate-150 bg-slate-300"
             placeholder="search for your recipe..."
             type="text"
             value={search}
