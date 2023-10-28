@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useContext } from "react";
 import { SearchContext } from "../context/SearchContext";
 
@@ -21,12 +22,12 @@ const RecipeCard = () => {
         </p>
       ) : (
         recipes && (
-          <div className="container max-w-full px-5 py-10 mx-auto bg-slate-200">
-            <div className="grid grid-cols-1 gap-4 p-4 mb-3 lg:grid-cols-3 place-items-center bg-slate-300">
+          <div className="container max-w-full px-5 py-10 mx-auto bg-[#73BD46] dark:bg-[#93C25A]">
+            <div className="grid grid-cols-1 gap-4 p-4 mb-5 sm:grid-cols-2 place-items-center bg-slate-300">
               {recipes.map((recipe) => (
                 <div
                   key={recipe.recipe.label}
-                  className="container max-w-sm rounded-md shadow-2xl md:max-w-lg "
+                  className="container max-w-sm mb-5 rounded-md shadow-2xl md:max-w-lg "
                 >
                   <div className="flex flex-col gap-4 p-4 lg:flex-row ">
                     <img
@@ -34,21 +35,30 @@ const RecipeCard = () => {
                       src={recipe.recipe.image}
                       alt={recipe.recipe.label}
                     />{" "}
-                    <div className="flex flex-col line-clamp-6">
-                      <h3 className="p-2 text-lg font-bold">{recipe.recipe.label}</h3>
-                      <p className="">
+                    <div className="flex flex-col ">
+                      <h3 className="p-2 text-lg font-bold">
+                        {recipe.recipe.label}
+                      </h3>
+                      <p className="text-[.85rem] sm:text-sm text-slate-600 leading-snug tracking-tight sm:leading-loose">
                         This is a{" "}
-                        <span className="font-medium uppercase text-cyan-600">
+                        <span className="font-medium uppercase text-sky-900 dark:text-slate-50">
                           {recipe.recipe.cuisineType}{" "}
                         </span>{" "}
-                        cuisine with  {recipe.recipe.dietLabels}
-                       
+                        cuisine {recipe.recipe.dietLabels}
                       </p>
-                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p>
-                       <ul className="flex w-2/3 list-disc"> {recipe.recipe.healthLabels.map(healthLabel => (<li>{healthLabel}</li>))}   </ul>  
+                      <p className="text-[.85rem] sm:text-sm text-slate-600 leading-snug tracking-tight sm:leading-loose">
+                        Calories: {Math.floor(recipe.recipe.calories)}
+                      </p>{" "}
+                      <ol className="max-w-sm  text-[.65rem] sm:text-sm text-slate-500 leading-snug tracking-tight sm:leading-loose flex flex-wrap py-2 gap-x-2 list-inside list-disc ">
+                        {recipe.recipe.healthLabels
+                          .slice(0, 12)
+                          .map((healthLabel) => (
+                            <li>{healthLabel}</li>
+                          ))}{" "}
+                      </ol>
                     </div>
                   </div>
-                  <div className="p-4 rounded bg-slate-500">
+                  <div className="p-4 rounded-b bg-slate-500">
                     <p className="font-medium">Ingredients </p>
 
                     <ol>

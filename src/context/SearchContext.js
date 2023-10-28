@@ -3,19 +3,24 @@ import { createContext, useState, useEffect } from "react";
 export const SearchContext = createContext();
 
 export default function ContextProvider({ children }) {
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") || false
+  );
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
+  const handleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+    localStorage.setItem("darkMode", darkMode);
+  };
   const getQuery = (e) => {
     e.preventDefault();
     setQuery(search);
-    setSearch("");
+    // setSearch("");
   };
-  useEffect(() => {
-    fetchRecipe(query);
-  }, [query]);
+
   const fetchRecipe = async (query) => {
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT,
       apiId = process.env.REACT_APP_API_ID,
@@ -38,7 +43,10 @@ export default function ContextProvider({ children }) {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    fetchRecipe(query);
+    return setSearch("");
+  }, [query]);
   const updateSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -54,6 +62,8 @@ export default function ContextProvider({ children }) {
         query,
         getQuery,
         setSearch,
+        handleDarkMode,
+        darkMode,
       }}
     >
       {children}
