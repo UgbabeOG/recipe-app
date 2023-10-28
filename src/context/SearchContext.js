@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const SearchContext = createContext();
 
@@ -7,7 +7,16 @@ export default function ContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
-  const fetchRecipe = async (e) => {
+  const [query, setQuery] = useState("");
+  const getQuery = (e) => {
+    e.preventDefault();
+    setQuery(search);
+    setSearch("");
+  };
+  useEffect(() => {
+    fetchRecipe(query);
+  }, [query]);
+  const fetchRecipe = async (query) => {
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT,
       apiId = process.env.REACT_APP_API_ID,
       apiKey = process.env.REACT_APP_API_KEY;
@@ -20,6 +29,7 @@ export default function ContextProvider({ children }) {
         throw new Error(`Failed to fetch data: HTTP status ${res.status}`);
       }
       const data = await res.json();
+      console.log(data.hits);
       setRecipes(data.hits);
     } catch (error) {
       setError(true);
@@ -28,15 +38,9 @@ export default function ContextProvider({ children }) {
       setLoading(false);
     }
   };
+
   const updateSearch = (e) => {
     setSearch(e.target.value);
-  };
-  const [query, setQuery] = useState("");
-  const getQuery = (e) => {
-    e.preventDefault();
-    setQuery(search);
-    fetchRecipe();
-    setSearch("");
   };
 
   return (
@@ -45,7 +49,6 @@ export default function ContextProvider({ children }) {
         recipes,
         error,
         loading,
-        fetchRecipe,
         search,
         updateSearch,
         query,
