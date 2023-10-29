@@ -1,83 +1,67 @@
-import React, { useEffect, useState, useContext } from "react";
+/* eslint-disable jsx-a11y/img-redundant-alt */
+import React, { useContext } from "react";
 import { SearchContext } from "../context/SearchContext";
 
 const RecipeCard = () => {
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const { query } = useContext(SearchContext);
-  const fetchRecipe = async () => {
-    const apiEndpoint = process.env.REACT_APP_API_ENDPOINT,
-      apiId = process.env.REACT_APP_API_ID,
-      apiKey = process.env.REACT_APP_API_KEY;
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `${apiEndpoint}?q=${query}&app_id=${apiId}&app_key=${apiKey}`
-      );
-      if (!res.ok) {
-        throw new Error(`Failed to fetch data: HTTP status ${res.status}`);
-      }
-      const data = await res.json();
-      console.log(data.hits);
-      setRecipes(data.hits);
-    } catch (error) {
-      setError(true);
-      console.error(`error finding recipe : ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { recipes, error, loading } = useContext(SearchContext);
 
-  useEffect(() => {
-    fetchRecipe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
   return (
     <>
       {loading ? (
-        <div className="flex flex-col justify-center items-center">
-          <div className="custom-loader block"></div>
-          <p className="p-5 text-3xl">searching for recipe please wait...</p>
+        <div className="flex flex-col items-center justify-center">
+          <div className="block custom-loader"></div>
+          <p className="p-5 md:text-3xl">searching for recipe please wait...</p>
         </div>
       ) : error ? (
-        <p>Network error, please try again</p>
-      ) : recipes && recipes.length === 0 ? (
-        <p className="p-5 text-3xl text-center">
-          Enter food name in search bar to find your ingredients.
+        <p className="m-auto text-lg text-center text-slate-600">
+          Network error, please try again.
+        </p>
+      ) : recipes.length === 0 ? (
+        <p className="w-[60%] m-auto p-5 text-sm text-center text-slate-500">
+          No results found for keyword entered, please try again.
         </p>
       ) : (
         recipes && (
-          <div className="container mx-auto py-20 max-w-[960px] px-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-4 p-4 bg-slate-200">
+          <div className="container max-w-full px-5 py-10 mx-auto bg-[#73BD46] dark:bg-[#93C25A]">
+            <div className="grid grid-cols-1 gap-4 p-4 mb-5 sm:grid-cols-2 place-items-center bg-slate-300">
               {recipes.map((recipe) => (
                 <div
                   key={recipe.recipe.label}
-                  className="shadow-lg rounded-md p-2  "
+                  className="container max-w-sm mb-5 rounded-md shadow-2xl md:max-w-lg "
                 >
-                  {" "}
-                  <div className="container p-3 m-2 relative flex gap-4 overflow-clip">
+                  <div className="flex flex-col gap-4 p-4 lg:flex-row ">
                     <img
-                      className="rounded-md  object-contain "
+                      className="object-cover w-full h-40 rounded"
                       src={recipe.recipe.image}
                       alt={recipe.recipe.label}
-                    />
-                    <h3 className="font-bold absolute bottom-3 left-3 p-2 ">
-                      {recipe.recipe.label}
-                    </h3>{" "}
-                    <div className="flex flex-col">
-                      {" "}
-                      <p className="">
-                        {recipe.recipe.dietLabels} 
-                        {recipe.recipe.cuisineType} cuisine
+                    />{" "}
+                    <div className="flex flex-col ">
+                      <h3 className="p-2 text-lg font-bold">
+                        {recipe.recipe.label}
+                      </h3>
+                      <p className="text-[.85rem] sm:text-sm text-slate-600 leading-snug tracking-tight sm:leading-loose">
+                        This is a{" "}
+                        <span className="font-medium uppercase text-sky-900 dark:text-slate-50">
+                          {recipe.recipe.cuisineType}{" "}
+                        </span>{" "}
+                        cuisine {recipe.recipe.dietLabels}
                       </p>
-                        
-                      <p>Calories: {Math.floor(recipe.recipe.calories)}</p> <p>{recipe.recipe.healthLabels}</p>
+                      <p className="text-[.85rem] sm:text-sm text-slate-600 leading-snug tracking-tight sm:leading-loose">
+                        Calories: {Math.floor(recipe.recipe.calories)}
+                      </p>{" "}
+                      <ol className="max-w-sm  text-[.65rem] sm:text-sm text-slate-500 leading-snug tracking-tight sm:leading-loose flex flex-wrap py-2 gap-x-2 list-inside list-disc ">
+                        {recipe.recipe.healthLabels
+                          .slice(0, 12)
+                          .map((healthLabel) => (
+                            <li>{healthLabel}</li>
+                          ))}{" "}
+                      </ol>
                     </div>
                   </div>
-                  <div className="box">
+                  <div className="p-4 rounded-b bg-slate-500">
+                    <p className="font-medium">Ingredients </p>
+
                     <ol>
-                      <p className="font-bold">Ingredients below</p>
                       {recipe.recipe.ingredients.map((ingredient, i) => (
                         <li key={i}>{ingredient.text}</li>
                       ))}

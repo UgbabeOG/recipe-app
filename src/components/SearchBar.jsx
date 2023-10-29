@@ -10,22 +10,25 @@ const SearchBar = () => {
       <div>
         <form
           onSubmit={(e) =>
-            search.length > 0
+            search.length >= 1
               ? getQuery(e)
-              :  alert("enter search term in search bar") && e.preventDefault()
+              : null
           }
-          className="p-5 flex justify-center gap-4 min-h-[10vh] w-full"
+          className="p-5 flex justify-center min-h-[10vh] w-full"
           action=""
         >
           <input
-            className="placeholder:italic placeholder:text-slate-150 w-2/5  bg-slate-300 rounded px-3 py-1"
+            className="w-2/5 px-3 py-1 rounded shadow appearance-none placeholder:italic placeholder: bg-slate-300 outline-[#F78B3A] dark:outline-[#FB9D4D]"
             placeholder="search for your recipe..."
             type="text"
             value={search}
             onChange={updateSearch}
           />
-          <button type="submit">
-            <FaSearch className="my-2 text-3xl text-sky-600" />
+          <button 
+          disabled={search.length <= 0 ? true:false}
+          
+          type="submit" className="p-2 rounded  active:bg-slate-300 bg-slate-200">
+            <FaSearch className="text-3xl text-[#F78B3A] dark:text-[#FB9D4D]" />
           </button>
         </form>
       </div>
