@@ -31,6 +31,7 @@ const RecipeCard = () => {
                 >
                   <div className="flex flex-col gap-4 p-4 lg:flex-row ">
                     <img
+                      loading="lazy"
                       className="object-cover w-full h-40 rounded"
                       src={recipe.recipe.image}
                       alt={recipe.recipe.label}
