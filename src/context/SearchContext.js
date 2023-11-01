@@ -34,7 +34,6 @@ export default function ContextProvider({ children }) {
         throw new Error(`Failed to fetch data: HTTP status ${res.status}`);
       }
       const data = await res.json();
-      console.log(data.hits);
       setRecipes(data.hits);
     } catch (error) {
       setError(true);

@@ -23,7 +23,7 @@ const SearchBar = () => {
           <button
             disabled={search.length <= 0 ? true : false}
             type="submit"
-            className="p-2 rounded  active:bg-slate-300 bg-slate-200"
+            className="p-2 rounded active:bg-slate-300 bg-slate-200"
           >
             <FaSearch className="text-3xl text-[#F78B3A] dark:text-[#FB9D4D]" />
           </button>
