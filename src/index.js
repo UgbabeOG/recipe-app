@@ -9,7 +9,7 @@ import { ErrorBoundary } from "react-error-boundary";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ErrorBoundary fallback={<p>error finding page please reload</p>}>
+    <ErrorBoundary fallback={<p className="grid place-items-center">Error finding page please reload</p>}>
       <ContextProvider>
         <App />
       </ContextProvider>

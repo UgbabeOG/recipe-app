@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React  from "react";
 import { FaSearch } from "react-icons/fa";
-import { SearchContext } from "../context/SearchContext";
+import {  useAuth } from "../context/SearchContext";
 
 const SearchBar = () => {
-  const { getQuery, search, updateSearch } = useContext(SearchContext);
+  const { getQuery, search, updateSearch } = useAuth();
 
   return (
     <>

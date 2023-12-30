@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 export const SearchContext = createContext();
 
@@ -69,3 +69,4 @@ export default function ContextProvider({ children }) {
     </SearchContext.Provider>
   );
 }
+export const useAuth = ()=> useContext(SearchContext)
